@@ -4,10 +4,11 @@ function SprintGame.load()
   -- Variables
   SprintGame.PlayerScores = {playerOne = 0, playerTwo = 0};
   SprintGame.backgroundGFX = love.graphics.newImage("GFX/Backgrounds/SprintGame_main.png");
-  SprintGame.message = "";
+  SprintGame.Message = {};
+  SprintGame.Message.text = "";
+  SprintGame.Message.x = love.graphics.getWidth() / 2;
+  SprintGame.Message.y = love.graphics.getHeight() / 5;
   SprintGame.instructions = "Press left arrow and right arrow to move!";
-  SprintGame.x = love.graphics.getWidth() / 2;
-  SprintGame.y = love.graphics.getHeight() / 4;
   SprintGame.winnerName = "";
   SprintGame.gameOver = false;
   SprintGame.startTime = love.timer.getTime();
@@ -23,10 +24,10 @@ function SprintGame.load()
     -- Functions
     CountDown.update = function()
       if(CountDown.currentTime - SprintGame.startTime <= CountDown.topTime - 1) then
-        SprintGame.message = tostring(math.floor(CountDown.topTime - (CountDown.currentTime - SprintGame.startTime)));
+        SprintGame.Message.text = tostring(math.floor(CountDown.topTime - (CountDown.currentTime - SprintGame.startTime)));
         CountDown.currentTime = love.timer.getTime();
       else
-        SprintGame.message = "GO!";
+        SprintGame.Message.text = "GO!";
         CountDown.runningCountdown = false;
       end
     end
@@ -93,7 +94,7 @@ function SprintGame.update()
 
   if(not SprintGame.gameOver and not CountDown.runningCountdown) then
     -- Run players update function
-     if not Player.hasFinished then Player.update(); end
+    if not Player.hasFinished then Player.update(); end
 
     -- Run AI's update function
     if not AIPlayer.hasFinished then AIPlayer.update(); end
@@ -116,18 +117,17 @@ function SprintGame.update()
     elseif (SprintGame.winnerName == "" and Player.hasFinished and AIPlayer.hasFinished) then
       SprintGame.winnerName = "Draw";
     end
-
   elseif (CountDown.runningCountdown) then
     CountDown.update();
   else
-    SprintGame.message = (((SprintGame.winnerName == Player.name) and "Congratulations " .. SprintGame.winnerName .. ", you won!" or "Looks like you lost... " .. SprintGame.winnerName .. " won this match.") .. "\n\n\nPlayer: " .. tostring(Utils.RoundNumber(SprintGame.PlayerScores.playerOne)) .. " seconds" .. "\n\n\nAI: " .. tostring(Utils.RoundNumber(SprintGame.PlayerScores.playerTwo)) .. " seconds");
+    SprintGame.Message.text = (((SprintGame.winnerName == Player.name) and "Congratulations " .. SprintGame.winnerName .. ", you won!" or "Looks like you lost... " .. SprintGame.winnerName .. " won this match.") .. "\n\n\nPlayer: " .. tostring(Utils.RoundNumber(SprintGame.PlayerScores.playerOne)) .. " seconds" .. "\n\n\nAI: " .. tostring(Utils.RoundNumber(SprintGame.PlayerScores.playerTwo)) .. " seconds");
   end
 end
 
 function SprintGame.draw()
   love.graphics.draw(SprintGame.backgroundGFX, 0, 0);
   love.graphics.print(SprintGame.instructions, 0, 0);
-  love.graphics.printf(SprintGame.message, SprintGame.x - love.graphics.getFont():getWidth(SprintGame.message) / 2, SprintGame.y, 1000, "left");
+  love.graphics.printf(SprintGame.Message.text, SprintGame.Message.x - love.graphics.getFont():getWidth(SprintGame.Message.text) / 2, SprintGame.Message.y, 1000, "left");
   Player.draw();
   AIPlayer.draw();
 end

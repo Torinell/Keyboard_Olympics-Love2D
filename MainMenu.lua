@@ -40,5 +40,5 @@ function MainMenu.draw()
 end
 
 function Utils.CurrentStateUnload()
-SprintGame = nil;
+MainMenu = nil;
 end
