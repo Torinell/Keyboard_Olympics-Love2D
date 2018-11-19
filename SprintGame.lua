@@ -3,7 +3,7 @@ SprintGame = {};
 function SprintGame.load()
   -- Variables
   SprintGame.PlayerScores = {playerOne = 0, playerTwo = 0};
-  SprintGame.backgroundGFX = love.graphics.newImage("GFX/Backgrounds/SprintGame_main.jpg");
+  SprintGame.backgroundGFX = love.graphics.newImage("GFX/Backgrounds/SprintGame_main.png");
   SprintGame.message = "";
   SprintGame.x = love.graphics.getWidth() / 2;
   SprintGame.y = love.graphics.getHeight() / 4;
