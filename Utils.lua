@@ -1,5 +1,5 @@
 require "Debug"
-Utils = {}
+Utils = {};
 
 function Utils.ValueExists(aTable, aSearchValue)
   for key, value in pairs(aTable) do
@@ -29,7 +29,7 @@ function Utils.SwitchState(aGameState)
 
   Utils.UnloadCurrentState();
   collectgarbage();
-  
+
   if aGameState == GameState.MainMenu then
     MainMenu.load();
   elseif aGameState == GameState.SprintGame then

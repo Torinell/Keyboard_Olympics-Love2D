@@ -1,4 +1,4 @@
-MainMenu = {}
+MainMenu = {};
 
 function MainMenu.load()
   local yOffset = 0;

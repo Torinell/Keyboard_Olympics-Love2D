@@ -1,4 +1,4 @@
-Debug = {}
+Debug = {};
 
 function Debug.ValidateCollidable(anObject, anErrorPrefix)
   anErrorPrefix = '(' .. anErrorPrefix .. ") "
