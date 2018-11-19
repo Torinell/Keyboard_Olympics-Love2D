@@ -5,6 +5,7 @@ function SprintGame.load()
   SprintGame.PlayerScores = {playerOne = 0, playerTwo = 0};
   SprintGame.backgroundGFX = love.graphics.newImage("GFX/Backgrounds/SprintGame_main.png");
   SprintGame.message = "";
+  SprintGame.instructions = "Press left arrow and right arrow to move!";
   SprintGame.x = love.graphics.getWidth() / 2;
   SprintGame.y = love.graphics.getHeight() / 4;
   SprintGame.winnerName = "";
@@ -33,8 +34,9 @@ function SprintGame.load()
   -- Create local player and it's members
   Player = {};
     -- Variables
+    Player.name = "player";
     Player.x = 50;
-    Player.y = love.graphics.getHeight() - love.graphics.getHeight()/4 * 3;
+    Player.y = love.graphics.getHeight() - ((love.graphics.getHeight()/4) * 3);
     Player.GFX = love.graphics.newImage("GFX/Sprites/SprintGame_player.png");
     Player.width = Player.GFX:getWidth();
     Player.height = Player.GFX:getHeight();
@@ -60,50 +62,79 @@ function SprintGame.load()
   -- Create local opponent for player and it's members
   AIPlayer = {};
     -- Variables
+    AIPlayer.name = "AI";
     AIPlayer.x = 50;
     AIPlayer.y = love.graphics.getHeight() - love.graphics.getHeight()/4;
+    AIPlayer.GFX = love.graphics.newImage("GFX/Sprites/SprintGame_AI.png");
+    AIPlayer.width = Player.GFX:getWidth();
+    AIPlayer.height = Player.GFX:getHeight();
+    AIPlayer.startTime = love.timer.getTime();
+    AIPlayer.randomTime = love.math.random(0.1, 0.15);
+    AIPlayer.hasFinished = false;
+
+    -- Functions
+    AIPlayer.update = function()
+      if (love.timer.getTime() - AIPlayer.startTime >= AIPlayer.randomTime) then
+        AIPlayer.x = AIPlayer.x + 10;
+        AIPlayer.startTime = love.timer.getTime();
+        AIPlayer.randomTime = love.math.random(0.1, 0.15);
+      end
+    end
+
+    AIPlayer.draw = function()
+      love.graphics.draw(AIPlayer.GFX, AIPlayer.x, AIPlayer.y)
+    end
 end
 
 function SprintGame.update()
+  if(love.keyboard.isDown("escape")) then
+    Utils.SwitchState(GameState.MainMenu);
+  end
+
   if(not SprintGame.gameOver and not CountDown.runningCountdown) then
     -- Run players update function
      if not Player.hasFinished then Player.update(); end
 
     -- Run AI's update function
-    AIPlayer.update();
+    if not AIPlayer.hasFinished then AIPlayer.update(); end
 
-    -- Check if there's a winner to be crowned!
     if (not Player.hasFinished and Player.x >= love.graphics.getWidth() - Player.width * 2) then
-      SprintGame.PlayerScores.playerOne = SprintGame.startTime - love.timer.getTime();
+      SprintGame.PlayerScores.playerOne = love.timer.getTime() - SprintGame.startTime;
       Player.hasFinished = true;
     elseif (not AIPlayer.hasFinished and AIPlayer.x >= love.graphics.getWidth() - AIPlayer.width * 2) then
-      SprintGame.PlayerScores.playerTwo = SprintGame.startTime - love.timer.getTime();
+      SprintGame.PlayerScores.playerTwo = love.timer.getTime() - SprintGame.startTime;
       AIPlayer.hasFinished = true;
     end
 
     SprintGame.gameOver = (AIPlayer.hasFinished and Player.hasFinished);
 
+    -- Check if there's a winner to be crowned!
     if (Player.hasFinished and not AIPlayer.hasFinished) then
-      SprintGame.winnerName = "Player";
+      SprintGame.winnerName = Player.name;
     elseif (not Player.hasFinished and AIPlayer.hasFinished) then
-      SprintGame.winnerName = "AI";
+      SprintGame.winnerName = AIPlayer.name;
+    elseif (SprintGame.winnerName == "" and Player.hasFinished and AIPlayer.hasFinished) then
+      SprintGame.winnerName = "Draw";
     end
 
   elseif (CountDown.runningCountdown) then
     CountDown.update();
   else
-    SprintGame.message = "Congratulations " .. SprintGame.winnerName .. " you won!\n";--.. "Player: " .. SprintGame.startTime - SprintGame.PlayerScores.playerOne - CountDown.topTime;
+    SprintGame.message = (((SprintGame.winnerName == Player.name) and "Congratulations " .. SprintGame.winnerName .. ", you won!" or "Looks like you lost... " .. SprintGame.winnerName .. " won this match.") .. "\n\n\nPlayer: " .. tostring(Utils.RoundNumber(SprintGame.PlayerScores.playerOne)) .. " seconds" .. "\n\n\nAI: " .. tostring(Utils.RoundNumber(SprintGame.PlayerScores.playerTwo)) .. " seconds");
   end
 end
 
 function SprintGame.draw()
   love.graphics.draw(SprintGame.backgroundGFX, 0, 0);
-  love.graphics.print(SprintGame.message, SprintGame.x - love.graphics.getFont():getWidth(SprintGame.message) / 2, SprintGame.y);
+  love.graphics.print(SprintGame.instructions, 0, 0);
+  love.graphics.printf(SprintGame.message, SprintGame.x - love.graphics.getFont():getWidth(SprintGame.message) / 2, SprintGame.y, 1000, "left");
   Player.draw();
+  AIPlayer.draw();
 end
 
 function Utils.CurrentStateUnload()
   SprintGame = nil;
+  CountDown = nil;
   Player = nil;
   AIPlayer = nil;
 end

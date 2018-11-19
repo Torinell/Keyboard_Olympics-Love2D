@@ -41,6 +41,10 @@ function Utils.SwitchState(aGameState)
   currentState = aGameState;
 end
 
+function Utils.RoundNumber(aNumber)
+  return aNumber % 1 >= 0.5 and math.ceil(aNumber) or math.floor(aNumber);
+end
+
 function Utils.UnloadCurrentState()
   -- This function is defined in individual states to unload localized states
 end
