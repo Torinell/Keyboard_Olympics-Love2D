@@ -70,20 +70,26 @@ function SprintGame.load()
     AIPlayer.width = Player.GFX:getWidth();
     AIPlayer.height = Player.GFX:getHeight();
     AIPlayer.startTime = love.timer.getTime();
-    AIPlayer.randomTime = love.math.random(0.1, 0.15);
+    AIPlayer.delayTime = 0.1;
     AIPlayer.hasFinished = false;
 
     -- Functions
     AIPlayer.update = function()
-      if (love.timer.getTime() - AIPlayer.startTime >= AIPlayer.randomTime) then
+      if (love.timer.getTime() - AIPlayer.startTime >= AIPlayer.delayTime) then
         AIPlayer.x = AIPlayer.x + 10;
         AIPlayer.startTime = love.timer.getTime();
-        AIPlayer.randomTime = love.math.random(0.1, 0.15);
       end
     end
 
     AIPlayer.draw = function()
       love.graphics.draw(AIPlayer.GFX, AIPlayer.x, AIPlayer.y)
+    end
+
+    Utils.CurrentStateUnload = function()
+      SprintGame = nil;
+      CountDown = nil;
+      Player = nil;
+      AIPlayer = nil;
     end
 end
 
@@ -94,10 +100,14 @@ function SprintGame.update()
 
   if(not SprintGame.gameOver and not CountDown.runningCountdown) then
     -- Run players update function
-    if not Player.hasFinished then Player.update(); end
+    if not Player.hasFinished then
+      Player.update();
+    end
 
     -- Run AI's update function
-    if not AIPlayer.hasFinished then AIPlayer.update(); end
+    if not AIPlayer.hasFinished then
+      AIPlayer.update();
+    end
 
     if (not Player.hasFinished and Player.x >= love.graphics.getWidth() - Player.width * 2) then
       SprintGame.PlayerScores.playerOne = love.timer.getTime() - SprintGame.startTime;
@@ -130,11 +140,4 @@ function SprintGame.draw()
   love.graphics.printf(SprintGame.Message.text, SprintGame.Message.x - love.graphics.getFont():getWidth(SprintGame.Message.text) / 2, SprintGame.Message.y, 1000, "left");
   Player.draw();
   AIPlayer.draw();
-end
-
-function Utils.CurrentStateUnload()
-  SprintGame = nil;
-  CountDown = nil;
-  Player = nil;
-  AIPlayer = nil;
 end

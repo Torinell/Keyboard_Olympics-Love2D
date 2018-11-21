@@ -1,4 +1,3 @@
-require "Debug"
 Utils = {};
 
 function Utils.ValueExists(aTable, aSearchValue)
@@ -32,15 +31,17 @@ function Utils.SwitchState(aGameState)
 
   if aGameState == GameState.MainMenu then
     MainMenu.load();
+    currentState = MainMenu;
   elseif aGameState == GameState.SprintGame then
     SprintGame.load();
+    currentState = SprintGame;
   elseif aGameState == GameState.SharpShooterGame then
     SharpShooterGame.load();
+    currentState = SharpShooterGame;
   elseif aGameState == GameState.EndScreen then
     EndScreen.load();
+    currentState = EndScreen;
   end
-
-  currentState = aGameState;
 end
 
 function Utils.RoundNumber(aNumber)
@@ -48,5 +49,5 @@ function Utils.RoundNumber(aNumber)
 end
 
 function Utils.UnloadCurrentState()
-  -- This function is defined in individual states to unload localized states
+  -- This function is defined in individual states to unload state variables and functions related to that state
 end

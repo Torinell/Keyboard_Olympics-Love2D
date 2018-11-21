@@ -26,7 +26,6 @@ function MainMenu.update(dt)
   if (love.mouse.isDown(1)) then
     for key, button in pairs(MainMenu.Buttons) do
       if (Utils.MouseCollisionCheck(button)) then
-        -- OnPressed is actually SwitchState over in Utils.lua, look in the MainMenu table for more info
         button.OnPressed();
       end
     end
