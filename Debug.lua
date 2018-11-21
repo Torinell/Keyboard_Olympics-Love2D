@@ -22,3 +22,11 @@ function Debug.Breakpoint(aTriggerButton)
     debug.debug()
   end
 end
+
+function Debug.KeysExist(aTable, searchKeys)
+  local foundKey = {};
+  for key,value in pairs(searchKey) do
+    if aTable[searchKey] ~= nil then table.insert(true); end
+  end
+  return false;
+end

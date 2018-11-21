@@ -9,6 +9,7 @@ function Utils.ValueExists(aTable, aSearchValue)
   return false;
 end
 
+
 function Utils.MouseCollisionCheck(anObject, someXOffset, someYOffset)
   if enabledDebug then Debug.ValidateCollidable(anObject, "CollisionCheck"); end
   someXOffset = someXOffset or 0;
@@ -46,6 +47,10 @@ end
 
 function Utils.RoundNumber(aNumber)
   return aNumber % 1 >= 0.5 and math.ceil(aNumber) or math.floor(aNumber);
+end
+
+function Utils.GetPointDistance(aPoint, aSecondPoint)
+  return (((aPoint.x)*(aPoint.x)) + ((aSecondPoint.x)*(aSecondPoint.y)))
 end
 
 function Utils.UnloadCurrentState()

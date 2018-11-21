@@ -1,11 +1,27 @@
 SharpShooterGame = {};
 
 function SharpShooterGame.load()
+  -- Variables
+  SharpShooterGame.crosshair = love.graphics.newImage("GFX/Sprites/SharpShooterGame_crosshair.png");
+  SharpShooterGame.crosshairSpeed = 0;
+  SharpShooterGame.targetGFX = love.graphics.newImage("GFX/Sprites/SharpShooterGame_target.png");
+  SharpShooterGame.targetX = love.graphics.getWidth() / 2;
+  SharpShooterGame.targetY = love.graphics.getHeight() / 2;
+  SharpShooterGame.backgroundGFX = love.graphics.newImage("GFX/Backgrounds/SharpShooterGame_main.png");
+  -- Functions
+  SharpShooterGame.GetNewYSpeed = function()
+
+  end;
+
+  Utils.UnloadCurrentState = function()
+    SharpShooterGame = nil;
+  end
 end
 
-function SharpShooterGame.update()
+function SharpShooterGame.update(dt)
+
 end
 
-function Utils.UnloadCurrentState()
-  SharpShooterGame = nil;
+function SharpShooterGame.draw()
+
 end
