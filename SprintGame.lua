@@ -1,6 +1,5 @@
 SprintGame = {};
-
-function SprintGame.load()
+SprintGame.load = function()
   -- Variables
   SprintGame.PlayerScores = {playerOne = 0, playerTwo = 0};
   SprintGame.backgroundGFX = love.graphics.newImage("GFX/Backgrounds/SprintGame_main.png");
@@ -70,12 +69,12 @@ function SprintGame.load()
     AIPlayer.width = Player.GFX:getWidth();
     AIPlayer.height = Player.GFX:getHeight();
     AIPlayer.startTime = love.timer.getTime();
-    AIPlayer.delayTime = 0.1;
+    AIPlayer.delayTime = 5;
     AIPlayer.hasFinished = false;
 
     -- Functions
-    AIPlayer.update = function()
-      if (love.timer.getTime() - AIPlayer.startTime >= AIPlayer.delayTime) then
+    AIPlayer.update = function(aDeltaTime)
+      if (love.timer.getTime() - AIPlayer.startTime >= (AIPlayer.delayTime + love.math.random(0, 0.5)) * aDeltaTime) then
         AIPlayer.x = AIPlayer.x + 10;
         AIPlayer.startTime = love.timer.getTime();
       end
@@ -93,7 +92,7 @@ function SprintGame.load()
     end
 end
 
-function SprintGame.update()
+function SprintGame.update(aDeltaTime)
   if(love.keyboard.isDown("escape")) then
     Utils.SwitchState(GameState.MainMenu);
   end
@@ -106,7 +105,7 @@ function SprintGame.update()
 
     -- Run AI's update function
     if not AIPlayer.hasFinished then
-      AIPlayer.update();
+      AIPlayer.update(aDeltaTime);
     end
 
     if (not Player.hasFinished and Player.x >= love.graphics.getWidth() - Player.width * 2) then
