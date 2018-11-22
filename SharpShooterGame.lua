@@ -23,5 +23,6 @@ function SharpShooterGame.update(dt)
 end
 
 function SharpShooterGame.draw()
-
+  love.graphics.draw(SharpShooterGame.backgroundGFX, 0, 0);
+  love.graphics.draw(SharpShooterGame.crosshair, S, y, r, sx, sy, ox, oy, kx, ky)
 end
