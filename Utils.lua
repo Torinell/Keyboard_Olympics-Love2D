@@ -50,7 +50,7 @@ function Utils.RoundNumber(aNumber)
 end
 
 function Utils.GetPointDistance(aPoint, aSecondPoint)
-  return (((aPoint.x)*(aPoint.x)) + ((aSecondPoint.x)*(aSecondPoint.y)))
+  return ( + math.pow(aSecondPoint.x, 2))
 end
 
 function Utils.UnloadCurrentState()
