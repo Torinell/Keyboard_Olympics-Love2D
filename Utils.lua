@@ -26,10 +26,9 @@ end
 
 function Utils.SwitchState(aGameState)
   if enabledDebug then assert(Utils.ValueExists(GameState, aGameState), "The Gamestate \"".. aGameState .."\" doesn't exist!") end
-
-  Utils.UnloadCurrentState();
+  currentState = nil;
   collectgarbage();
-  Debug.Breakpoint();
+
   if aGameState == GameState.MainMenu then
     currentState = CreateMainMenu();
   elseif aGameState == GameState.SprintGame then

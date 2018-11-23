@@ -15,7 +15,7 @@ function Debug.ValidateDrawable(anObject, anErrorPrefix)
   assert(anObject.GFX or anObject.Text or anObject.Name,  anErrorPrefix .. "Object is missing Drawable type!")
 end
 
-function Debug.Breakpoint(aTriggerButton)
+function Debug.ConditionalBreakpoint(aTriggerButton)
   aTriggerButton = aTriggerButton or 'd'
 
   if(love.keyboard.isDown(aTriggerButton)) then
