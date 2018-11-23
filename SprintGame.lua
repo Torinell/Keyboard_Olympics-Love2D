@@ -3,7 +3,7 @@ function CreateNewSprintGame()
 
   function SprintGame.load()
     -- Variables
-    SprintGame.PlayerScores = {playerOne = 0, playerTwo = 0};
+    SprintGame.PlayerScores = {playerOne = 0, playerTwo = 0, roundAtValue = 2};
     SprintGame.backgroundGFX = love.graphics.newImage("GFX/Backgrounds/SprintGame_main.png");
     SprintGame.Message = {};
     SprintGame.Message.text = "";
@@ -124,7 +124,9 @@ function CreateNewSprintGame()
     elseif (CountDown.runningCountdown) then
       CountDown.update();
     else
-      SprintGame.Message.text = (((SprintGame.winnerName == Player.name) and "Congratulations " .. SprintGame.winnerName .. ", you won!" or "Looks like you lost... " .. SprintGame.winnerName .. " won this match.") .. "\n\n\nPlayer: " .. tostring(Utils.RoundNumber(SprintGame.PlayerScores.playerOne)) .. " seconds" .. "\n\n\nAI: " .. tostring(Utils.RoundNumber(SprintGame.PlayerScores.playerTwo)) .. " seconds");
+      SprintGame.Message.text = (((SprintGame.winnerName == Player.name) and "Congratulations " .. SprintGame.winnerName .. ", you won!" or "Looks like you lost... " .. SprintGame.winnerName .. " won this match.") ..
+      "\n\n\nPlayer: "  .. tostring(Utils.RoundNumber(SprintGame.PlayerScores.playerOne, SprintGame.PlayerScores.roundAtValue)) .. " seconds" ..
+      "\n\n\nAI: "      .. tostring(Utils.RoundNumber(SprintGame.PlayerScores.playerTwo, SprintGame.PlayerScores.roundAtValue)) .. " seconds");
     end
   end
 
