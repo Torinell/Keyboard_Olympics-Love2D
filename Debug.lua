@@ -16,10 +16,10 @@ function Debug.ValidateDrawable(anObject, anErrorPrefix)
 end
 
 function Debug.ConditionalBreakpoint(aTriggerButton)
-  aTriggerButton = aTriggerButton or 'd'
+  aTriggerButton = aTriggerButton or 'd';
 
   if(love.keyboard.isDown(aTriggerButton)) then
-    debug.debug()
+    debug.debug();
   end
 end
 
