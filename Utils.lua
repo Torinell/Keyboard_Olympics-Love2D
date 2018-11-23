@@ -29,20 +29,17 @@ function Utils.SwitchState(aGameState)
 
   Utils.UnloadCurrentState();
   collectgarbage();
-
+  Debug.Breakpoint();
   if aGameState == GameState.MainMenu then
-    MainMenu.load();
-    currentState = MainMenu;
+    currentState = CreateMainMenu();
   elseif aGameState == GameState.SprintGame then
-    SprintGame.load();
-    currentState = SprintGame;
+    currentState = CreateNewSprintGame();
   elseif aGameState == GameState.SharpShooterGame then
-    SharpShooterGame.load();
-    currentState = SharpShooterGame;
+    currentState = CreateNewSharpShooterGame();
   elseif aGameState == GameState.EndScreen then
-    EndScreen.load();
-    currentState = EndScreen;
+    currentState = CreateEndScreen();
   end
+  currentState.load();
 end
 
 function Utils.RoundNumber(aNumber)
@@ -51,8 +48,4 @@ end
 
 function Utils.GetPointDistance(aPoint, aSecondPoint)
   return (((aPoint.x)*(aPoint.x)) + ((aSecondPoint.x)*(aSecondPoint.y)))
-end
-
-function Utils.UnloadCurrentState()
-  -- This function is defined in individual states to unload state variables and functions related to that state
 end
