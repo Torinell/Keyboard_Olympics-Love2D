@@ -26,33 +26,26 @@ end
 
 function Utils.SwitchState(aGameState)
   if enabledDebug then assert(Utils.ValueExists(GameState, aGameState), "The Gamestate \"".. aGameState .."\" doesn't exist!") end
-
-  Utils.UnloadCurrentState();
+  currentState = nil;
   collectgarbage();
 
   if aGameState == GameState.MainMenu then
-    MainMenu.load();
-    currentState = MainMenu;
+    currentState = CreateMainMenu();
   elseif aGameState == GameState.SprintGame then
-    SprintGame.load();
-    currentState = SprintGame;
+    currentState = CreateNewSprintGame();
   elseif aGameState == GameState.SharpShooterGame then
-    SharpShooterGame.load();
-    currentState = SharpShooterGame;
+    currentState = CreateNewSharpShooterGame();
   elseif aGameState == GameState.EndScreen then
-    EndScreen.load();
-    currentState = EndScreen;
+    currentState = CreateEndScreen();
   end
+  currentState.load();
 end
 
-function Utils.RoundNumber(aNumber)
-  return aNumber % 1 >= 0.5 and math.ceil(aNumber) or math.floor(aNumber);
+function Utils.RoundNumber(aNumber, anOffset)
+  anOffset = anOffset or 0;
+  return (aNumber * math.pow(10, anOffset)) % 1 >= 0.5 and math.ceil((aNumber * math.pow(10, anOffset))) / math.pow(10, anOffset) or math.floor((aNumber * math.pow(10, anOffset))) / math.pow(10, anOffset);
 end
 
 function Utils.GetPointDistance(aPoint, aSecondPoint)
-  return ( + math.pow(aSecondPoint.x, 2))
-end
-
-function Utils.UnloadCurrentState()
-  -- This function is defined in individual states to unload state variables and functions related to that state
+  return Utils.RoundNumber(math.sqrt(((math.pow((aSecondPoint.x - aPoint.x), 2) + math.pow((aSecondPoint.y - aPoint.y), 2)))));
 end
