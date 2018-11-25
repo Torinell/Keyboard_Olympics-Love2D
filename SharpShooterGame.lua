@@ -86,7 +86,7 @@ function CreateNewSharpShooterGame()
       if (love.keyboard.isDown("space") and SharpShooterGame.buttonPressed ~= true) then
         table.insert(SharpShooterGame.bulletHoles, SharpShooterGame.ShootBullet());
         SharpShooterGame.buttonPressed = true;
-      else
+      elseif (true ~= love.keyboard.isDown("space")) then
         SharpShooterGame.buttonPressed = false;
       end
 
