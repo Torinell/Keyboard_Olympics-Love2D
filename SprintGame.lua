@@ -87,12 +87,6 @@ function CreateNewSprintGame()
     end
   end -- End of load
 
-  function SprintGame.update()
-    if(love.keyboard.isDown("escape")) then
-      Utils.SwitchState(GameState.MainMenu);
-    end
-end
-
 function SprintGame.update(aDeltaTime)
   if(love.keyboard.isDown("escape")) then
     Utils.SwitchState(GameState.MainMenu);
@@ -132,7 +126,12 @@ function SprintGame.update(aDeltaTime)
     else
       SprintGame.Message.text = (((SprintGame.winnerName == Player.name) and "Congratulations " .. SprintGame.winnerName .. ", you won!" or "Looks like you lost... " .. SprintGame.winnerName .. " won this match.") ..
       "\n\n\nPlayer: "  .. tostring(Utils.RoundNumber(SprintGame.PlayerScores.playerOne, SprintGame.PlayerScores.roundAtValue)) .. " seconds" ..
-      "\n\n\nAI: "      .. tostring(Utils.RoundNumber(SprintGame.PlayerScores.playerTwo, SprintGame.PlayerScores.roundAtValue)) .. " seconds");
+      "\n\n\nAI: "      .. tostring(Utils.RoundNumber(SprintGame.PlayerScores.playerTwo, SprintGame.PlayerScores.roundAtValue)) .. " seconds\n\n\nPRESS ENTER TO PROCEED!");
+      if (love.keyboard.isDown("return")) then
+        GlobalScoreTable.SprintGame.playerTime = SprintGame.PlayerScores.playerOne;
+        GlobalScoreTable.SprintGame.winnerName = SprintGame.winnerName;
+        Utils.SwitchState(GameState.SharpShooterGame);
+      end
     end
   end
 

@@ -47,5 +47,5 @@ function Utils.RoundNumber(aNumber, anOffset)
 end
 
 function Utils.GetPointDistance(aPoint, aSecondPoint)
-  return Utils.RoundNumber(math.sqrt(((math.pow((aSecondPoint.x - aPoint.x), 2) + math.pow((aSecondPoint.y - aPoint.y), 2)))));
+  return math.abs(Utils.RoundNumber(math.sqrt(((math.pow((aSecondPoint.x - aPoint.x), 2) + math.pow((aSecondPoint.y - aPoint.y), 2)))), 2));
 end

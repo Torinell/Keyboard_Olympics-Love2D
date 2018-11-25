@@ -1,5 +1,11 @@
 Debug = {};
 
+function Debug.ValidateXYPresence(anObject, anErrorPrefix)
+  anErrorPrefix = '(' .. anErrorPrefix .. ") "
+  assert(anObject.x ~= nil,       anErrorPrefix .. "Object is missing X value!")
+  assert(anObject.y ~= nil,       anErrorPrefix .. "Object is missing Y value!")
+end
+
 function Debug.ValidateCollidable(anObject, anErrorPrefix)
   anErrorPrefix = '(' .. anErrorPrefix .. ") "
   assert(anObject.x ~= nil,       anErrorPrefix .. "Object is missing X value!")

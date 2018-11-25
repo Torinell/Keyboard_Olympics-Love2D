@@ -12,8 +12,8 @@ function CreateMainMenu()
     MainMenu.Buttons =
     {
       Start =             {x = love.graphics.getWidth()/2, y = GetYOffset(100), width = 0, height = yHeight, OnPressed = function() Utils.SwitchState(GameState.SprintGame);       end, Name = "Start"},
-      SprintGame =        {x = love.graphics.getWidth()/2, y = GetYOffset(50),  width = 0, height = yHeight, OnPressed = function() Utils.SwitchState(GameState.SprintGame);       end, Name = "Sprint Game"},
-      SharpShooterGame =  {x = love.graphics.getWidth()/2, y = GetYOffset(50),  width = 0, height = yHeight, OnPressed = function() Utils.SwitchState(GameState.SharpShooterGame); end, Name = "Sharp Shooter Game"},
+      -- SprintGame =        {x = love.graphics.getWidth()/2, y = GetYOffset(50),  width = 0, height = yHeight, OnPressed = function() Utils.SwitchState(GameState.SprintGame);       end, Name = "Sprint Game"},
+      -- SharpShooterGame =  {x = love.graphics.getWidth()/2, y = GetYOffset(50),  width = 0, height = yHeight, OnPressed = function() Utils.SwitchState(GameState.SharpShooterGame); end, Name = "Sharp Shooter Game"},
       Quit =              {x = love.graphics.getWidth()/2, y = GetYOffset(50),  width = 0, height = yHeight, OnPressed = function() love.event.quit()                              end, Name = "Quit"}
     };
 

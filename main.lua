@@ -9,6 +9,7 @@ require "EndScreen"
 function love.load()
   love.graphics.setNewFont("OXFORD.TTF", 20);
   enabledDebug = true;
+  GlobalScoreTable = {SprintGame = {}, SharpShooterGame = {}};
   GameState = {MainMenu="MainMenu", SprintGame="SprintGame", SharpShooterGame="SharpShooterGame", EndScreen="EndScreen"};
   currentState = {};
   Utils.SwitchState(GameState.MainMenu);
