@@ -45,7 +45,3 @@ function Utils.RoundNumber(aNumber, anOffset)
   anOffset = anOffset or 0;
   return (aNumber * math.pow(10, anOffset)) % 1 >= 0.5 and math.ceil((aNumber * math.pow(10, anOffset))) / math.pow(10, anOffset) or math.floor((aNumber * math.pow(10, anOffset))) / math.pow(10, anOffset);
 end
-
-function Utils.GetPointDistance(aPoint, aSecondPoint)
-  return math.abs(Utils.RoundNumber(math.sqrt(((math.pow((aSecondPoint.x - aPoint.x), 2) + math.pow((aSecondPoint.y - aPoint.y), 2)))), 2));
-end

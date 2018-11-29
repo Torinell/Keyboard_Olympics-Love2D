@@ -42,22 +42,21 @@ function CreateNewSharpShooterGame()
       Crosshair.GFX = love.graphics.newImage("GFX/Sprites/SharpShooterGame_crosshair.png");
       Crosshair.x = love.graphics.getWidth() / 2;
       Crosshair.y = 10;
-      Crosshair.centerY = Crosshair.y;
       Crosshair.speed = 0;
-      Crosshair.topSpeed = 600;
+      Crosshair.topSpeed = 800;
       Crosshair.rotation = 0;
       Crosshair.rotationConstant = 0.1;
       Crosshair.OriginOffset = {};
       Crosshair.OriginOffset.x = Crosshair.GFX:getWidth() / 2;
       Crosshair.OriginOffset.y = Crosshair.GFX:getHeight() / 2;
+      Crosshair.wrapConstant = 0.09
       -- Functions
       Crosshair.update = function(dt)
         Crosshair.speed = Crosshair.GetNewYSpeed(dt);
         Crosshair.y = Crosshair.y + Crosshair.speed;
-        Crosshair.centerY = Crosshair.y + Crosshair.OriginOffset.y;
         Crosshair.rotation = Crosshair.rotation + Crosshair.rotationConstant;
 
-        if (Crosshair.GetYDifferenceMultiplier() < 0.1) then
+        if (Crosshair.GetYDifferenceMultiplier() < Crosshair.wrapConstant) then
           Crosshair.y = Crosshair.OriginOffset.y / 2;
           Crosshair.rotation = 0;
         end
@@ -73,7 +72,7 @@ function CreateNewSharpShooterGame()
       end
 
       Crosshair.GetYDifferenceMultiplier = function()
-        return Utils.RoundNumber(1 - (math.abs(Crosshair.centerY - SharpShooterGame.ScreenMidPoint.y) / (SharpShooterGame.ScreenMidPoint.y + SharpShooterGame.ScreenMidPoint.offset)), 2);
+        return Utils.RoundNumber(1 - (math.abs(Crosshair.y - love.graphics.getHeight()/2) / (love.graphics.getHeight()/2)), 2);
       end
   end
 
@@ -125,6 +124,7 @@ function CreateNewSharpShooterGame()
     love.graphics.print("Score: " .. SharpShooterGame.Score.currentScore, SharpShooterGame.Score.x, SharpShooterGame.Score.y, 0, SharpShooterGame.Score.drawScale, SharpShooterGame.Score.drawScale);
     love.graphics.print(SharpShooterGame.bulletMessage .. SharpShooterGame.bulletCount, 10, 40);
     love.graphics.print(SharpShooterGame.endMessage, SharpShooterGame.ScreenMidPoint.x - love.graphics.getFont():getWidth(SharpShooterGame.endMessage), SharpShooterGame.ScreenMidPoint.y, 0, SharpShooterGame.Score.drawScale, SharpShooterGame.Score.drawScale);
+    love.graphics.print(Crosshair.GetYDifferenceMultiplier(), 10,100)
   end
 
   function SharpShooterGame.ShootBullet()

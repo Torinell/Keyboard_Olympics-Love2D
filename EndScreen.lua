@@ -21,7 +21,7 @@ function CreateEndScreen()
     if(love.mouse.isDown(1)) then
       if(Utils.MouseCollisionCheck(EndScreen.ReturnButton)) then
         GlobalScoreTable = nil;
-        GlobalScoreTable = {};
+        GlobalScoreTable = {SprintGame = {}, SharpShooterGame = {}};
         Utils.SwitchState(GameState.MainMenu);
       end
     end
