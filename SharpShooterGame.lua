@@ -72,7 +72,7 @@ function CreateNewSharpShooterGame()
       end
 
       Crosshair.GetYDifferenceMultiplier = function()
-        return Utils.RoundNumber(1 - (math.abs(Crosshair.y - love.graphics.getHeight()/2) / (love.graphics.getHeight()/2)), 2);
+        return Utils.RoundNumber(1 - (math.abs(Crosshair.y - SharpShooterGame.ScreenMidPoint.y/2) / (SharpShooterGame.ScreenMidPoint.y)), 2);
       end
   end
 
